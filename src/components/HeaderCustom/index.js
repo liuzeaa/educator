@@ -29,7 +29,7 @@ const Header  = Layout.Header;
                 />
                 <Menu
                     mode="horizontal"
-                    style={{ lineHeight: '64px', float: 'right' }}
+                    style={{ lineHeight: '64px', float: 'right',marginRight:'8px' }}
                     onClick={this.menuClick}
                 >
                     <Menu.Item key="full" onClick={this.screenFull} >
