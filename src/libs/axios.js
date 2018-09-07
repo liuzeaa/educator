@@ -3,7 +3,7 @@ import { getStorage, setStorage } from './storage';
 import Cookies from 'js-cookie';
 import {message} from 'antd'
 // 统一请求路径前缀
-let base = '/educator';
+export const base = '/educator';
 // 超时设定
 axios.defaults.timeout = 15000;
 
@@ -84,7 +84,17 @@ export const postRequest = (url, params) => {
         }
     });
 };
-
+export const postDefaultRequest = (url, params) => {
+    let accessToken = getStorage("accessToken");
+    return axios({
+        method: 'post',
+        url: `${base}${url}`,
+        data: params,
+        headers: {
+            'accessToken': accessToken
+        }
+    });
+};
 export const putRequest = (url, params) => {
     let accessToken = getStorage("accessToken");
     return axios({

@@ -2,8 +2,8 @@ import React from 'react';
 import {BrowserRouter as Router,Route,Switch,Redirect} from 'react-router-dom';
 import App from './App';
 import Login from './views/account/login/Login';
-import {getStorage} from './libs/storage';
 import NotFound from './views/error/404'
+import {getStorage} from "./libs/storage";
 export default class Page extends React.Component{
     constructor(props){
         super(props);
@@ -11,8 +11,8 @@ export default class Page extends React.Component{
             login:false
         }
     }
-    componentDidMount(){
-        if(getStorage('userInfo')!==null){
+    componentWillMount(){
+        if(getStorage('userInfo')!=null){
             this.setState({
                 login:true
             })
@@ -22,7 +22,7 @@ export default class Page extends React.Component{
         return(
             <Router>
                 <Switch>
-                    <Route exact path="/" render={() => this.state.login?<Redirect to={"/app"}/>:<Redirect to={"/login"}/>}/>
+                    <Route exact path="/" render={() => this.state.login?<Redirect to={"/app/home"}/>:<Redirect to={"/login"}/>}/>
                     <Route path="/app" component={App}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/404" component={NotFound}/>

@@ -1,17 +1,53 @@
 import React from 'react';
-import { Layout, Menu,Icon } from 'antd';
+import { Layout } from 'antd';
+import {withRouter} from 'react-router-dom'
+import {initRouter} from '../../libs/util'
+import SiderMenu from './SiderMenu'
 const { Sider } = Layout;
-const SubMenu = Menu.SubMenu;
-export default class SideCustom extends React.Component{
-    state = {
-        theme: 'dark',
-        current: '1',
-    }
-    handleClick = (e) => {;
-        this.setState({
-            current: e.key,
-        });
-    }
+
+ class SideCustom extends React.Component{
+     state = {
+         menus:[],
+         collapsed: false,
+         mode: 'inline',
+         openKey: '',
+         selectedKey: ''
+     };
+     componentDidMount() {
+         initRouter().then(res=>{
+             this.setState({
+                 menus:res
+             })
+         })
+         this.setMenuOpen(this.props);
+     }
+     onCollapse = (collapsed) => {
+         this.setState({
+             collapsed,
+             mode: collapsed ? 'vertical' : 'inline',
+         });
+     };
+     componentWillReceiveProps(nextProps) {
+         this.onCollapse(nextProps.collapsed)
+         this.setMenuOpen(nextProps)
+     }
+     setMenuOpen = props => {
+         const { pathname } = props.location;
+         this.setState({
+             openKey: pathname.slice(4,pathname.lastIndexOf('/')),
+             selectedKey: pathname.slice(pathname.lastIndexOf('/')+1)
+         });
+     }
+     menuClick = e => {
+         this.setState({
+             selectedKey: e.key
+         });
+     };
+     openMenu = v => {
+         this.setState({
+             openKey: v[v.length - 1]
+         })
+     };
     render(){
         return(
             <Sider
@@ -21,35 +57,18 @@ export default class SideCustom extends React.Component{
                 style={{ overflowY: 'auto' }}
             >
                 <div className="logo" />
-                <Menu
-                    theme={this.state.theme}
-                    onClick={this.handleClick}
-                    defaultOpenKeys={['sub1']}
-                    selectedKeys={[this.state.current]}
-                    mode="inline"
-                >
-                    <SubMenu key="sub1" title={<span><Icon type="mail" /><span>Navigation One</span></span>}>
-                        <Menu.Item key="1">Option 1</Menu.Item>
-                        <Menu.Item key="2">Option 2</Menu.Item>
-                        <Menu.Item key="3">Option 3</Menu.Item>
-                        <Menu.Item key="4">Option 4</Menu.Item>
-                    </SubMenu>
-                    <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>Navigtion Two</span></span>}>
-                        <Menu.Item key="5">Option 5</Menu.Item>
-                        <Menu.Item key="6">Option 6</Menu.Item>
-                        <SubMenu key="sub3" title="Submenu">
-                            <Menu.Item key="7">Option 7</Menu.Item>
-                            <Menu.Item key="8">Option 8</Menu.Item>
-                        </SubMenu>
-                    </SubMenu>
-                    <SubMenu key="sub4" title={<span><Icon type="setting" /><span>Navigation Three</span></span>}>
-                        <Menu.Item key="9">Option 9</Menu.Item>
-                        <Menu.Item key="10">Option 10</Menu.Item>
-                        <Menu.Item key="11">Option 11</Menu.Item>
-                        <Menu.Item key="12">Option 12</Menu.Item>
-                    </SubMenu>
-                </Menu>
+                <SiderMenu
+                    menus={this.state.menus}
+                    onClick={this.menuClick}
+                    theme="dark"
+                    mode={this.state.mode}
+                    selectedKeys={[this.state.selectedKey]}
+                    openKeys={[this.state.openKey]}
+                    onOpenChange={this.openMenu}
+                />
             </Sider>
         )
     }
 }
+
+export default withRouter(SideCustom)

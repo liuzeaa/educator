@@ -1,11 +1,12 @@
 import React from 'react';
 import {Layout,Icon,Menu,Badge} from 'antd';
+import {withRouter} from 'react-router-dom'
 import avater from '../../style/imgs/b1.jpg';
 import screenfull from 'screenfull'
 const {SubMenu}  = Menu;
 
 const Header  = Layout.Header;
-export default class HeaderCustom extends React.Component{
+ class HeaderCustom extends React.Component{
     screenFull = () => {
         if (screenfull.enabled) {
             screenfull.request();
@@ -15,7 +16,7 @@ export default class HeaderCustom extends React.Component{
         e.key === 'logout' && this.logout();
     };
     logout = () => {
-        localStorage.removeItem('user');
+        localStorage.clear();
         this.props.history.push('/login')
     };
     render(){
@@ -56,3 +57,4 @@ export default class HeaderCustom extends React.Component{
         )
     }
 }
+export default withRouter(HeaderCustom)

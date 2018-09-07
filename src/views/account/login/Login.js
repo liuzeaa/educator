@@ -1,11 +1,8 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import './login.less';
 import logoUrl from '../../../style/imgs/logo-h.png'
 import {Row,Col,Alert,Tabs,Icon} from 'antd';
 import PwdForm from './PwdFrom'
-import { withRouter} from 'react-router-dom';
 const TabPane = Tabs.TabPane;
 class Login extends React.Component{
     constructor(props){
@@ -19,7 +16,7 @@ class Login extends React.Component{
             <Row type="flex" justify="center" align="middle" className="login">
                 <Col style={{width:'368px'}}>
                     <Row className="header">
-                        <img src={logoUrl} style={{width:'220px'}}/>
+                        <img src={logoUrl} style={{width:'220px'}} alt=""/>
                         <div className="description">MuTouGou Educator Platform</div>
                     </Row>
                     <Alert message="Error" type="error" showIcon style={{display:this.state.error}}/>
