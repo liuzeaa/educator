@@ -2,11 +2,11 @@
 import { getRequest, postRequest, postDefaultRequest,putRequest, deleteRequest ,base} from '../libs/axios';
 import axios from 'axios'
 export const getMenuListByUserId = (params) =>{
-   return axios.get(`${base}/permission/getMenuList/${params}`)
+   return axios.get(`${base}/permission/getMenuList`,params)
 }
 // 登陆
 export const login = (params) => {
-    return postRequest('/login', params)
+    return postRequest('/login/post', params)
 }
 // 获取用户登录信息
 export const userInfo = (params) => {

@@ -3,15 +3,8 @@ import {getMenuListByUserId} from "../api";
 
 function initRouter() {
     return new Promise(function (resolve) {
-        // 判断用户是否登录
-        let userInfo = Cookies.get('userInfo')
-        if (userInfo === null || userInfo === "" || userInfo === undefined) {
-            // 未登录
-            return;
-        }
-        let userId = JSON.parse(Cookies.get("userInfo")).id;
         // 加载菜单
-        getMenuListByUserId(userId).then(res=>{
+        getMenuListByUserId().then(res=>{
             if(res.success){
                 let menuData = res.result;
                 if (menuData === null || menuData === "" || menuData === undefined) {

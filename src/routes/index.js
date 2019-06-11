@@ -13,7 +13,7 @@ export default  class Routes extends React.Component{
             routes: []
         }
     }
-    componentWillMount(){
+    componentDidMount() {
         initRouter().then(res=>{
             const routes=[];
             res.forEach(function(item){

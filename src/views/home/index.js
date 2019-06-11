@@ -4,7 +4,7 @@ export default class home extends React.Component{
     render(){
         return(
             <div>
-                <IconFont type="icon-home" />
+                <IconFont type="icon-home" style={{ fontSize: '16px', color: '#08c' }} />
             </div>
         )
     }
